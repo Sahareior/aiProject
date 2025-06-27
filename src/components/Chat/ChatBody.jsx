@@ -14,6 +14,8 @@ import History from './_components/History/History';
 import CustomModal from './_components/Modal';
 import { useLogoutMutation } from '../../redux/Slices/apiSlice';
 import { LiaLightbulb } from 'react-icons/lia';
+import { useDispatch } from 'react-redux';
+import { clearChat, clearSelectedChat } from '../../redux/Slices/taskSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,6 +25,7 @@ const ChatBody = () => {
   const [theme, setTheme] = useState('light');
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
 
   const handleLogout = async () => {
@@ -34,6 +37,11 @@ const ChatBody = () => {
       console.error('Logout failed:', error);
     }
   };
+const handleNewChat = () => {
+  dispatch(clearChat());
+  dispatch(clearSelectedChat());
+  navigate('/chat');
+};
 
   const toggleTheme = (checked) => {
     setTheme(checked ? 'dark' : 'light');
@@ -65,7 +73,7 @@ const ChatBody = () => {
 </div>
         <div className="flex justify-center flex-col gap-7 items-center p-4">
           {!collapsed && (
-            <Link to="/chat" className="ml-2 bg-blue-400 p-2 text-white text-lg font-semibold">
+            <Link to="/chat" onClick={handleNewChat} className="ml-2 bg-blue-400 p-2 text-white text-lg font-semibold">
               New Chat
             </Link>
           )}

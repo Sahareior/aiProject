@@ -1,9 +1,11 @@
+// redux/Slices/taskSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   chat: [],
   selectedChat: null,
-  selectedModel: null, // ✅ Clean fix here
+  selectedModel: null,
+  newChat: true,
 };
 
 const taskSlice = createSlice({
@@ -19,8 +21,20 @@ const taskSlice = createSlice({
     setSelectedModel: (state, action) => {
       state.selectedModel = action.payload;
     },
+    setChat: (state, action) => {
+      state.chat = action.payload;
+    },
+    clearChat: (state) => {
+      state.chat = [];
+    },
   },
 });
 
-export const { setSelectedChat, clearSelectedChat, setSelectedModel } = taskSlice.actions;
+export const {
+  setSelectedChat,
+  clearSelectedChat,
+  setSelectedModel,
+  setChat,
+  clearChat,
+} = taskSlice.actions;
 export default taskSlice.reducer;

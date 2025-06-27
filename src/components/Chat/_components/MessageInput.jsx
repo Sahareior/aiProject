@@ -4,16 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { LiaPaperclipSolid } from "react-icons/lia";
-import { setSelectedChat } from '../../../redux/Slices/taskSlice'; // 💡 import your Redux action
+import { clearChat, clearSelectedChat, setChat, setSelectedChat } from '../../../redux/Slices/taskSlice';
 
-const MessageInput = ({ setChat }) => {
+const MessageInput = () => {
   const [message, setMessage] = useState('');
   const [sendMessage] = useSendMessageMutation();
   const [addMessageToChat] = useAddMessageToChatMutation();
   const dispatch = useDispatch();
   const selectedChat = useSelector((state) => state?.taskStore?.selectedChat);
-
- const selectedModel = useSelector((state) => state.taskStore.selectedModel);
+  const selectedModel = useSelector((state) => state.taskStore.selectedModel);
+  const chat = useSelector((state) => state.taskStore.chat);
 
   const handleSend = async () => {
     if (!message.trim()) return;
@@ -34,12 +34,24 @@ const MessageInput = ({ setChat }) => {
           model_name: selectedModel || 'Chartwright',
           message_content: message,
         }).unwrap();
+
+        if (response?.data?.id) {
+          dispatch(setSelectedChat(response.data)); // Set new chat in Redux
+        }
       }
 
       setMessage('');
 
       if (response?.data?.messages) {
-        setChat((prev) => [...prev, ...response.data.messages]);
+       dispatch(setChat([...chat, ...response.data.messages]));
+
+        // Optional scroll to bottom
+        setTimeout(() => {
+          const chatContainer = document.getElementById('chat-container');
+          if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+          }
+        }, 100);
       }
 
     } catch (err) {
@@ -47,12 +59,12 @@ const MessageInput = ({ setChat }) => {
     }
   };
 
-//   ❌ Avoid clearing chat unnecessarily
   useEffect(() => {
-    if (selectedChat) {
-      setChat('');
-    }
-  }, [selectedChat?.id]);
+  if (selectedChat) {
+     dispatch(clearChat());
+  
+  }
+}, [selectedChat?.id])
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {

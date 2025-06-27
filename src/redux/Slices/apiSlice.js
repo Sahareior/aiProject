@@ -52,6 +52,15 @@ export const apiSlice = createApi({
       }),
     }),
 
+verifyOtp: builder.mutation({
+  query: (data) => ({
+    url: '/authentication_app/verify_otp/',
+    method: 'POST',
+    body: data,
+  }),
+}),
+
+
     signin: builder.mutation({
   query: (loginData) => ({
     url: '/authentication_app/signin/',
@@ -78,6 +87,7 @@ export const {
   useAddMessageToChatMutation,
   useGetChatByIdQuery,
   useGetProductsQuery,
+   useVerifyOtpMutation,
    useSigninMutation,
   useLogoutMutation, // ✅ Add this hook to your exports
 } = apiSlice;

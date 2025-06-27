@@ -14,9 +14,9 @@ const SignUp = () => {
     try {
       const result = await signup({ email, password }).unwrap();
       console.log('Signup successful:', result);
-
+         
     
-      navigate('/verify-otp', { state: { email } }); // ✅ always redirect after successful signup
+      navigate('/verify-otp', { state: { email } }); 
     } catch (error) {
       console.error('Signup failed:', error);
  

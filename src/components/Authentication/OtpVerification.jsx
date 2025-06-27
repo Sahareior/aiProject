@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Input, Button, message } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useVerifyOtpMutation } from '../../redux/Slices/apiSlice';
+
 
 const OtpVerification = () => {
   const [otp, setOtp] = useState(['', '', '', '']);
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
+  const [verifyOtp] = useVerifyOtpMutation();
 
   if (!email) {
-    // If user lands directly, redirect back
     navigate('/signup');
   }
 
@@ -18,7 +20,6 @@ const OtpVerification = () => {
     updatedOtp[index] = value;
     setOtp(updatedOtp);
 
-    // Move to next input if value entered
     if (value && index < 3) {
       document.getElementById(`otp-${index + 1}`).focus();
     }
@@ -32,23 +33,12 @@ const OtpVerification = () => {
     }
 
     try {
-      const response = await fetch('https://alibackend.duckdns.org/authentication_app/verify_otp/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp: enteredOtp }),
-      });
-
-      const data = await response.json();
-console.log('otpData', data)
-      if (response.ok) {
-        message.success('OTP verified successfully!');
-        navigate('/login');
-      } else {
-        message.error(data?.message || 'Invalid OTP. Please try again.');
-      }
-    } catch (error) {
-      console.error(error);
-      message.error('Something went wrong. Try again later.');
+      const res = await verifyOtp({ email, otp: enteredOtp }).unwrap();
+      message.success('OTP verified successfully!');
+      navigate('/chat');
+    } catch (err) {
+      console.error(err);
+      message.error(err?.data?.message || 'Invalid OTP. Please try again.');
     }
   };
 

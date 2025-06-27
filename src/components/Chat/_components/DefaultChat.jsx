@@ -5,10 +5,11 @@ import { useGetChatByIdQuery } from '../../../redux/Slices/apiSlice';
 
 import MessageInput from './MessageInput';
 import ChatBox from './ChatBox';
-import { setSelectedModel } from '../../../redux/Slices/taskSlice';
+import { setChat, setSelectedModel } from '../../../redux/Slices/taskSlice';
 
 const DefaultChat = () => {
-  const [chat, setChat] = useState([]);
+   const chat = useSelector((state) => state.taskStore.chat);
+
   const dispatch = useDispatch();
 
   const selectedData = useSelector((state) => state?.taskStore?.selectedChat);
@@ -18,7 +19,7 @@ const DefaultChat = () => {
 
   useEffect(() => {
     if (data?.data?.messages) {
-      setChat(data.data.messages);
+      dispatch(setChat([...chat, ...data.data.messages]));
     }
   }, [data]);
 
@@ -53,14 +54,14 @@ const DefaultChat = () => {
         </div>
 
         {/* Middle Chat */}
-        <div className="flex-1 w-full overflow-y-auto my-4">
+        <div className="flex-1 w-full hide-scrollbar overflow-y-auto my-4">
           {chat.length === 0 ? (
             <div className="h-full flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold text-blue-600">Hello,</h1>
               <p className="text-xl text-gray-500">How Can I Help You Today</p>
             </div>
           ) : (
-            <div className="m2">
+            <div className="m2 flex flex-col h-screen">
               <ChatBox chat={chat} />
             </div>
           )}
