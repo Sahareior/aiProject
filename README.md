@@ -15,6 +15,8 @@ npm install
 npm run dev
 
 Your app should now be running at: http://localhost:5173
+
+
 4. 🛡️ Dealing with CORS Issues
 
 If you encounter any CORS-related problems during development, you can use the “Allow CORS” browser extension available for Chrome:
