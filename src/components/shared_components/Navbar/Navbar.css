@@ -1,0 +1,38 @@
+/* Remove default selected bg color and style the active tab */
+.navbar-menu .ant-menu-item-selected {
+  background-color: transparent !important;
+  color: white !important;
+  position: relative;
+}
+
+.navbar-menu .ant-menu-item-selected::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: white;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover underline animation */
+.navbar-menu .ant-menu-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-menu .ant-menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: white;
+  width: 0%;
+  transition: width 0.4s ease-in-out;
+}
+
+.navbar-menu .ant-menu-item:hover::after {
+  width: 100%;
+}

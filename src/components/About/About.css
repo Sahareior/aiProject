@@ -1,0 +1,45 @@
+@keyframes floatX {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes floatXY {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(15px, -10px);
+  }
+  50% {
+    transform: translate(-10px, 20px);
+  }
+  75% {
+    transform: translate(10px, 5px);
+  }
+}
+
+/* Animation classes */
+.animate-float-x {
+  animation: floatX 6s ease-in-out infinite;
+}
+
+.animate-float-y {
+  animation: floatY 6s ease-in-out infinite;
+}
+
+.animate-float-xy {
+  animation: floatXY 6s ease-in-out infinite;
+}

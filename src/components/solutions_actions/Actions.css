@@ -1,0 +1,40 @@
+/* Remove margin between the whole nav and its surroundings */
+.custom-tabs .ant-tabs-nav {
+  margin: 0 !important;
+}
+
+/* Remove margin between individual tab buttons */
+.custom-tabs .ant-tabs-tab {
+  margin: 0 !important;              /* No space between tabs */
+  border-radius: 0 !important;       /* Remove rounded corners if not needed */
+  background-color: #0A1022 !important;
+  color: white !important;
+  padding: 12px 64px;
+}
+.custom-tabs2 .ant-tabs-tab {
+  margin: 0 !important;              /* No space between tabs */
+  border-radius: 0 !important;       /* Remove rounded corners if not needed */
+  background-color: #2B508D !important;
+  color: white !important;
+  padding: 12px 64px;
+}
+
+/* Ensure no padding or margin in wrapper */
+.custom-tabs .ant-tabs-nav-wrap {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+.custom-tabs .ant-tabs-tab-active {
+  background-color: #1E293B !important;
+  color: white !important;
+}
+.custom-tabs2 .ant-tabs-tab-active {
+  background-color: #2563EB !important;
+  color: yellow !important;
+}
+/* Actions.css */
+.custom-panel > .ant-collapse-content > .ant-collapse-content-box {
+  padding: 0 !important;
+}
